@@ -8,8 +8,7 @@ Resource        keywords/keywords.robot
 
 *** Keywords ***
 Example Keyword
-    Open Browser     http://rpachallenge.com/    Chrome 
-    Log    HOLAMUNDO    level=WARN
+    Open Browser     http://rpachallenge.com/    Chrome
 
 
 *** Tasks ***
