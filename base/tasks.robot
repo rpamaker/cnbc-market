@@ -8,7 +8,7 @@ Resource        keywords/keywords.robot
 
 *** Keywords ***
 Example Keyword
-    Open Browser     http://rpachallenge.com/    Chrome
+    Open Browser     https://alanniaresorts.com/    Chrome
 
 
 *** Tasks ***
