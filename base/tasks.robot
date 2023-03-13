@@ -9,7 +9,7 @@ Resource        keywords/keywords.robot
 *** Keywords ***
 Example Keyword
     Open Browser     https://www.legalitas.com/    Chrome
-    Sleep    15s
+    Sleep    15
 
 
 *** Tasks ***
