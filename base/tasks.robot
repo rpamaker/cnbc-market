@@ -1,21 +1,8 @@
 *** Settings ***
-Documentation   Template robot main suite.
-Library         SeleniumLibrary
-Library         Collections
-Library         libraries/ExampleHelper.py
-Resource        keywords/keywords.robot
+Library           SeleniumLibrary
 
-
-*** Keywords ***
-Example Keyword
-    Open Browser     https://www.legalitas.com/    Chrome
-    Sleep    15
-
-
-*** Tasks ***
-Example Task
-    Example Keyword
-    Example Robot Keyword
-
-
-
+*** Test Cases ***
+Open Browser
+    Open Browser    https://www.rpamaker.com    chrome
+    Sleep           5s
+    Close Browser
