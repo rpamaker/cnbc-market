@@ -1,9 +1,11 @@
 *** Settings ***
-Library           SeleniumLibrary
+Library  SeleniumLibrary
+
+*** Variables ***
+${URL}  https://www.rpamaker.com
 
 *** Test Cases ***
-Open Browser
-    Open Browser    https://www.rpamaker.com    chrome
-    Log    HIA
-    Sleep           15s
+Open Website and Wait
+    Open Browser  ${URL}  Chrome
+    Sleep  5s
     Close Browser
