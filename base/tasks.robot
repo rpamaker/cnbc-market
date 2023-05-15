@@ -1,11 +1,12 @@
 *** Settings ***
-Library  SeleniumLibrary
+Library           SeleniumLibrary
 
 *** Variables ***
-${URL}  https://www.rpamaker.com
+${URL}            http://www.rpamaker.com
+${BROWSER}        Chrome
 
 *** Test Cases ***
-Open Website and Wait
-    Open Browser  ${URL}  Chrome
-    Sleep  5s
+Open RPAMaker Website
+    Open Browser    ${URL}    ${BROWSER}
+    Sleep    5 seconds
     Close Browser
