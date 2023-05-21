@@ -3,7 +3,7 @@ Library           SeleniumLibrary
 
 *** Test Cases ***
 Open Browser
-    Open Browser    https://www.rpamaker.com    chrome
+    Open Browser    https://www.google.com    chrome
     Log    HIA
-    Sleep           15s
+    Sleep           25s
     Close Browser
