@@ -3,7 +3,7 @@ Library           SeleniumLibrary
 
 *** Test Cases ***
 Open Browser
-    Open Browser    https://www.google.com    chrome
+    Open Browser    https://www.sonda.com/    chrome
     Log    HIA
     Sleep           25s
     Close Browser
