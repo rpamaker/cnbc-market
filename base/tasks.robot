@@ -1,1 +1,1 @@
-This is the string to be encoded in Base64
+Intento de enviar sin email y nombre
