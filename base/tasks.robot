@@ -1,1 +1,1 @@
-µë-
+This is the string to be encoded in Base64
