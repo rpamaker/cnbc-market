@@ -1,22 +1,11 @@
 *** Settings ***
-Documentation   Template robot main suite.
-Library         OperatingSystem
-Library         SeleniumLibrary
-Library         Collections
-Library         libraries/ExampleHelper.py
-Resource        keywords/keywords.robot
+Library  SeleniumLibrary
 
+*** Variables ***
+${URL}  https://www.brou.com.uy/
 
-*** Keywords ***
-Example Keyword
-    Open Browser     http://rpachallenge.com/    Chrome 
-    Log    HOLAMUNDO    level=WARN
-
-
-*** Tasks ***
-Example Task
-    Example Keyword
-    Example Python Keyword
-    Example Robot Keyword
-
-
+*** Test Cases ***
+Open Website and Wait
+    Open Browser  ${URL}  Chrome
+    Sleep  25
+    Close Browser
