@@ -1,8 +1,7 @@
 robotframework
-robotframework-seleniumlibrary
+robotframework-seleniumlibrary==6.0.0
 robotframework-requests
 python-decouple==3.4
-rpamaker
 boto3
 google-api-core==2.11.0
 google-api-python-client==2.88.0
