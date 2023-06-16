@@ -2,7 +2,7 @@
 Library  SeleniumLibrary
 
 *** Variables ***
-${URL}  https://www.brou.com.uy/
+${URL}  https://www.brou.com.uy
 ${CUSTOM NONE}    ${None}
 
 *** Test Cases ***
