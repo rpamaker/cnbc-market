@@ -7,6 +7,6 @@ ${CUSTOM NONE}    ${None}
 
 *** Test Cases ***
 Open Website and Wait
-    Open Browser  ${URL}  Chrome     service_log_path=${CUSTOM NONE}
+    Open Browser  ${URL}  Chrome     service_log_path=${None}
     Sleep  25
     Close Browser
