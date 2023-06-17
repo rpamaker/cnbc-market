@@ -1,5 +1,5 @@
-robotframework===6.0.2
-robotframework-seleniumlibrary
+robotframework
+robotframework-seleniumlibrary==4.9.0
 robotframework-requests
 python-decouple==3.4
 boto3
