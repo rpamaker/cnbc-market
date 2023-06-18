@@ -8,6 +8,7 @@ ${XPATH}  //*[@id="p_p_id_cotizacion_WAR_broutmfportlet_INSTANCE_df0HsIO8xsuv_"]
 *** Test Cases ***
 Open Website and Log Value
     Open Browser  ${URL}  Chrome
+    Wait Until Element Is Visible  ${XPATH}  30
     ${value}=  Get Text  ${XPATH}
     Log  ${value}
     Close Browser
