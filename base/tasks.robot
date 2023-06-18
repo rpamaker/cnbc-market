@@ -7,5 +7,5 @@ ${URL}  https://www.brou.com.uy/
 *** Test Cases ***
 Open Website and Wait
     Open Browser  ${URL}  Chrome
-    Sleep  10
+    Sleep  1
     Close Browser
