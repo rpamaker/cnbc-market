@@ -10,5 +10,4 @@ Open Website and Log Value
     Open Browser  ${URL}  Chrome
     ${value}=  Get Text  ${XPATH}
     Log  ${value}
-    [Return]  ${value}
     Close Browser
