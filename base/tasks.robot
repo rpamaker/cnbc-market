@@ -2,16 +2,13 @@
 Library  SeleniumLibrary
 
 *** Variables ***
-${URL}  https://www.bcu.gub.uy/Estadisticas-e-Indicadores/Paginas/Cotizaciones.aspx
-${XPATH1}  //*[@id="recaptcha-anchor"]/div[1]
-${XPATH2}  //*[@id="ctl00_ctl63_g_0723770d_f942_45cc_80db_28dc7fa543a2_ctl00_lstCotizaciones"]/tbody/tr[1]/td[4]
+${URL}  https://www.brou.com.uy/
+${XPATH}  //*[@id="p_p_id_cotizacion_WAR_broutmfportlet_INSTANCE_df0HsIO8xsuv_"]/div/div/table/tbody/tr[1]/td[4]/div/p
 
-*** Tasks ***
-Open Website and Log Value
+*** Test Cases ***
+Open Site And Log Value
     Open Browser  ${URL}  Chrome
-    Wait Until Element Is Visible  ${XPATH1}
-    Click Element  ${XPATH1}
-    Wait Until Element Is Visible  ${XPATH2}
-    ${value}=  Get Text  ${XPATH2}
+    Wait Until Element Is Visible  ${XPATH}
+    ${value}=  Get Text  ${XPATH}
     Log  ${value}
     Close Browser
