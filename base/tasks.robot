@@ -2,13 +2,11 @@
 Library  SeleniumLibrary
 
 *** Variables ***
-${URL}  https://www.brou.com.uy/
-${XPATH}  //*[@id="p_p_id_cotizacion_WAR_broutmfportlet_INSTANCE_df0HsIO8xsuv_"]/div/div/table/tbody/tr[1]/td[4]/div/p
+${URL}  http://www.santander.com.uy
 
 *** Test Cases ***
-Open Site And Log Value
+Open Website and Wait
     Open Browser  ${URL}  Chrome
-    Wait Until Element Is Visible  ${XPATH}
-    ${value}=  Get Text  ${XPATH}
-    Log  ${value}
+    Wait Until Page Contains Element  body  30s
+    Sleep  5s
     Close Browser
