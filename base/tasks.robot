@@ -1,5 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
+Library  Collections
 
 *** Variables ***
 ${URL}  https://www.cnbc.com/markets/
