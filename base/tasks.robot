@@ -1,5 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
+Library  Collections
 
 *** Variables ***
 ${URL}  https://www.cnbc.com/markets/
@@ -17,7 +18,8 @@ Open Browser To CNBC
         ${last}=  Get Text  ${row} > .MarketSummary-last
         ${change}=  Get Text  ${row} > .MarketSummary-change
         ${percent_change}=  Get Text  ${row} > .MarketSummary-changePercent
-        Append To List  ${data}  ${name},${last},${change},${percent_change}
+        ${row_data}=  Catenate  SEPARATOR=,  ${name}  ${last}  ${change}  ${percent_change}
+        Append To List  ${data}  ${row_data}
     END
     ${csv_data}=  Catenate  SEPARATOR=\n  @{data}
     Create File  market.csv  ${csv_data}
