@@ -1,6 +1,5 @@
 *** Settings ***
 Library  SeleniumLibrary
-Library  Collections
 
 *** Variables ***
 ${URL}  https://www.cnbc.com/markets/
@@ -13,13 +12,12 @@ Open Browser To CNBC
     Wait Until Page Contains Element  css:.MarketSummary-marketWrapper
     ${rows}=  Get WebElements  css:.MarketSummary-marketWrapper > div:not(:last-child)
     @{data}=  Create List
-    FOR  ${row}  IN  @{rows}
-        ${name}=  Get Text  ${row} > a
-        ${last}=  Get Text  ${row} > .MarketSummary-last
-        ${change}=  Get Text  ${row} > .MarketSummary-change
-        ${percent_change}=  Get Text  ${row} > .MarketSummary-changePercent
-        ${row_data}=  Catenate  SEPARATOR=,  ${name}  ${last}  ${change}  ${percent_change}
-        Append To List  ${data}  ${row_data}
+    FOR  ${row}  IN  @{rows[:-1]}
+        ${name}=  Get Text  css:.MarketSummary-marketLink
+        ${last}=  Get Text  css:.MarketSummary-last
+        ${change}=  Get Text  css:.MarketSummary-change
+        ${percent_change}=  Get Text  css:.MarketSummary-changePercent
+        Append To List  ${data}  ${name},${last},${change},${percent_change}
     END
     ${csv_data}=  Catenate  SEPARATOR=\n  @{data}
     Create File  market.csv  ${csv_data}
