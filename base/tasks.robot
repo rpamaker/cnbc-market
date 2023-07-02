@@ -8,13 +8,13 @@ ${CSV_FILE}  market.csv
 *** Keywords ***
 Open Browser To Page
 	Open Browser  ${URL}  browser=chrome
-	Wait Until Page Contains Element  css:.MarketSummary-marketWrapper
+	Wait Until Page Contains Element  xpath://*[@id='MainContentContainer']/div/div/div/div[3]/div[1]/div[1]/section/div/div[2]/div[1]/div[1]/a
 
 Get Market Data
 	${market_data}=  Create List
 	${markets}=  Get WebElements  css:.MarketSummary-market
 	FOR  ${market}  IN  @{markets}
-		${name}=  Get Text  ${market} .MarketSummary-summaryColFirst
+		${name}=  Get Text  xpath://*[@id='MainContentContainer']/div/div/div/div[3]/div[1]/div[1]/section/div/div[2]/div[1]/div[1]/a
 		${last}=  Get Text  ${market} .MarketSummary-summaryColSecond
 		${chg}=  Get Text  ${market} .MarketSummary-summaryColThird
 		${pct_chg}=  Get Text  ${market} .MarketSummary-summaryColFourth
