@@ -1,25 +1,37 @@
 *** Settings ***
 Library  SeleniumLibrary
-Library  Collections
 
 *** Variables ***
 ${URL}  https://www.cnbc.com/markets/
-${BROWSER}  chrome
+${CSV_FILE}  market.csv
 
-*** Tasks ***
-Open Browser To CNBC
-    Open Browser  ${URL}  ${BROWSER}
-    Maximize Browser Window
-    Wait Until Page Contains Element  css:.MarketSummary-marketWrapper
-    ${rows}=  Get WebElements  css:.MarketSummary-marketWrapper > div:not(:last-child)
-    @{data}=  Create List
-    FOR  ${row}  IN  @{rows[:-1]}
-        ${name}=  Get Text  css:.MarketSummary-marketLink
-        ${last}=  Get Text  css:.MarketSummary-last
-        ${change}=  Get Text  css:.MarketSummary-change
-        ${percent_change}=  Get Text  css:.MarketSummary-changePercent
-        Append To List  ${data}  ${name},${last},${change},${percent_change}
-    END
-    ${csv_data}=  Catenate  SEPARATOR=\n  @{data}
-    Create File  market.csv  ${csv_data}
-    Close Browser
+*** Keywords ***
+Open Browser To Page
+	Open Browser  ${URL}  browser=chrome
+	Wait Until Page Contains Element  css:.MarketSummary-marketWrapper
+
+Get Market Data
+	${market_data}=  Create List
+	${markets}=  Get WebElements  css:.MarketSummary-market
+	FOR  ${market}  IN  @{markets}
+		${name}=  Get Text  ${market} .MarketSummary-summaryColFirst
+		${last}=  Get Text  ${market} .MarketSummary-summaryColSecond
+		${chg}=  Get Text  ${market} .MarketSummary-summaryColThird
+		${pct_chg}=  Get Text  ${market} .MarketSummary-summaryColFourth
+		${row}=  Create List  ${name}  ${last}  ${chg}  ${pct_chg}
+		Append To List  ${market_data}  ${row}
+	END
+	[Return]  ${market_data}
+
+Write Data To CSV
+	[Arguments]  ${data}
+	${header}=  Create List  Name  Last  CHG  % CHG
+	Create File  ${CSV_FILE}  ${header}
+	Append To Csv File  ${CSV_FILE}  ${data}
+
+*** Test Cases ***
+Get And Save Market Data
+	Open Browser To Page
+	${data}=  Get Market Data
+	Write Data To CSV  ${data}
+	Close Browser
