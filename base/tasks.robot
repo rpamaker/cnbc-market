@@ -1,48 +1,49 @@
 *** Settings ***
 Library  SeleniumLibrary
-Library  Collections
-Library  OperatingSystem
+Library  RPA.Tables
+Library  RPA.FileSystem
+Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${URL}  https://finance.yahoo.com/
-${TABLE_XPATH}  //*[@id='data-util-col']/section[3]/table
-${CSV_FILE}  market.csv
+${TABLE_XPATH}  //*[@id="data-util-col"]/section[3]/table
+${CSV_FILE}  output.csv
 
 *** Keywords ***
 Open Browser To Page
-	Open Browser  ${URL}  browser=firefox
-	Maximize Browser Window
-	Wait Until Page Contains Element  ${TABLE_XPATH}  timeout=30
+    Open Browser  ${URL}  Chrome
+    Wait Until Page Contains Element  ${TABLE_XPATH}  timeout=30
+
+Log Table HTML
+    ${table_html}=  Get Element Attribute  ${TABLE_XPATH}  outerHTML
+    Log  ${table_html}
 
 Get Table Data
-	${rows}=  Get WebElements  ${TABLE_XPATH}/tbody/tr
-	${data}=  Create List
-	FOR  ${row}  IN  @{rows}
-		${row_data}=  Create Dictionary
-		${name}=  Get Text  ${row}/td[1]
-		${last_price}=  Get Text  ${row}/td[2]
-		${change}=  Get Text  ${row}/td[3]
-		${percent_change}=  Get Text  ${row}/td[4]
-		Set To Dictionary  ${row_data}  Name  ${name}
-		Set To Dictionary  ${row_data}  Last Price  ${last_price}
-		Set To Dictionary  ${row_data}  Change  ${change}
-		Set To Dictionary  ${row_data}  % Change  ${percent_change}
-		Append To List  ${data}  ${row_data}
-	END
-	[Return]  ${data}
+    @{all_row_data}=  Create List
+    ${rows}=  Get WebElements  ${TABLE_XPATH}/tbody/tr
+    ${row_count}=  Get Length  ${rows}
+    FOR  ${index}  IN RANGE  0  ${row_count}
+        ${row_data}=  Create Dictionary
+        ${symbol}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[1]/a
+        ${last_price}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[2]
+        ${change}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[3]
+        ${percent_change}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[4]
+        Set To Dictionary  ${row_data}  Symbol  ${symbol}
+        Set To Dictionary  ${row_data}  Last Price  ${last_price}
+        Set To Dictionary  ${row_data}  Change  ${change}
+        Set To Dictionary  ${row_data}  % Change  ${percent_change}
+        Append To List  ${all_row_data}  ${row_data}
+    END
+    [Return]  ${all_row_data}
 
 Write Data To CSV
-	[Arguments]  ${data}
-	${csv_data}=  Create List  Name,Last Price,Change,% Change
-	FOR  ${row}  IN  @{data}
-		${csv_row}=  ${row}[Name],${row}[Last Price],${row}[Change],${row}[% Change]
-		Append To List  ${csv_data}  ${csv_row}
-	END
-	Create File  ${CSV_FILE}  ${csv_data}
+    [Arguments]  ${data}
+    ${table}=  Create Table  ${data}
+    Save Table To Csv  ${table}  ${CSV_FILE}
 
-*** Test Cases ***
-Get And Save Market Table Data
-	Open Browser To Page
-	${data}=  Get Table Data
-	Write Data To CSV  ${data}
-	Close All Browsers
+*** Tasks ***
+Get Yahoo Finance Data
+    Open Browser To Page
+    Log Table HTML
+    ${data}=  Get Table Data
+    Write Data To CSV  ${data}
