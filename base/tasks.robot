@@ -5,12 +5,12 @@ Library  RPA.Tables
 Suite Teardown  Close All Browsers
 
 *** Variables ***
-${URL}  https://finance.yahoo.com/
-${TABLE_XPATH}  //*[@id="data-util-col"]/section[3]/table
+${URL}  https://www.brou.com.uy/
+${TABLE_XPATH}  //*[@id="p_p_id_cotizacion_WAR_broutmfportlet_INSTANCE_df0HsIO8xsuv_"]/div/div/table
 ${CSV_FILE}  output.csv
 
 *** Keywords ***
-Open Yahoo Finance
+Open Brou Website
     Open Browser  ${URL}  browser=chrome
     Wait Until Page Contains Element  ${TABLE_XPATH}
 
@@ -24,14 +24,12 @@ Get Table Data
     ${row_count}=  Get Length  ${rows}
     FOR  ${index}  IN RANGE  0  ${row_count}
         ${row_data}=  Create Dictionary
-        ${symbol}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[1]/a
-        ${last_price}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[2]
-        ${change}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[3]
-        ${percent_change}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[4]
-        Set To Dictionary  ${row_data}  Symbol  ${symbol}
-        Set To Dictionary  ${row_data}  Last Price  ${last_price}
-        Set To Dictionary  ${row_data}  Change  ${change}
-        Set To Dictionary  ${row_data}  % Change  ${percent_change}
+        ${currency}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[1]/div/p
+        ${buy_value}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[2]/div/p
+        ${sell_value}=  Get Text  ${TABLE_XPATH}/tbody/tr[${index + 1}]/td[4]/div/p
+        Set To Dictionary  ${row_data}  Currency  ${currency}
+        Set To Dictionary  ${row_data}  Buy Value  ${buy_value}
+        Set To Dictionary  ${row_data}  Sell Value  ${sell_value}
         Append To List  ${all_row_data}  ${row_data}
     END
     [Return]  ${all_row_data}
@@ -42,8 +40,8 @@ Write To CSV
     Write Table To CSV  ${table}  ${CSV_FILE}
 
 *** Tasks ***
-Get Yahoo Finance Data
-    Open Yahoo Finance
+Get Brou Data
+    Open Brou Website
     Log Table HTML
     ${data}=  Get Table Data
     Write To CSV  ${data}
