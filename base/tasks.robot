@@ -15,7 +15,7 @@ Capture And Log Table Data
     @{rows}=  Get WebElements  ${TABLE_XPATH}/tbody/tr
     @{data}=  Create List
     FOR  ${row}  IN  @{rows}
-        ${currency}=  Get Text  ${row}/td[1]/div/p
+        ${currency}=  Get Text  ${row}/td[1]/div/div/p
         ${buy_rate}=  Get Text  ${row}/td[2]/div/p
         ${sell_rate}=  Get Text  ${row}/td[4]/div/p
         &{row_data}=  Create Dictionary  Currency=${currency}  Buy_Rate=${buy_rate}  Sell_Rate=${sell_rate}
