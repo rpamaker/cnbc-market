@@ -1,7 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
 Library  RPA.Tables
-Library  RPA.FileSystem
 Library  Collections
 Suite Teardown  Close All Browsers
 
@@ -40,7 +39,7 @@ Get Table Data
 Write Data To CSV
     [Arguments]  ${data}
     ${table}=  Create Table  ${data}
-    Save Table To Csv  ${table}  ${CSV_FILE}
+    Write Table To CSV  ${table}  ${CSV_FILE}
 
 *** Tasks ***
 Get Yahoo Finance Data
