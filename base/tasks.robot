@@ -2,6 +2,7 @@
 Library  SeleniumLibrary
 Library  RPA.Tables
 Library  RPA.FileSystem
+Library  Collections
 Suite Teardown  Close All Browsers
 
 *** Variables ***
