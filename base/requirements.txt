@@ -1,5 +1,3 @@
-robotframework==4.0.3
-robotframework-seleniumlibrary==5.1.3
-rpaframework==12.7.0
-RPA.Tables==12.7.0
-RPA.FileSystem==12.7.0
+robotframework
+robotframework-seleniumlibrary
+rpaframework
