@@ -12,10 +12,18 @@ Open The Website And Login
     # Here you would typically have steps to log in, if necessary
 
 Find The Table
-    Wait Until Page Contains Element  xpath://*[@title='Cotizaciones']  timeout=30
-    ${table_xpath}=  Set Variable  xpath://*[@title='Cotizaciones']
-    ${table_html}=  Get Element Attribute  ${table_xpath}  outerHTML
-    Log  ${table_html}
+    # Trying different XPaths
+    ${xpaths}=  Create List  xpath://*[contains(text(),'Cotizaciones')]  xpath://*[contains(@value,'Cotizaciones')]
+    FOR  ${xpath}  IN  @{xpaths}
+        Wait Until Page Contains Element  ${xpath}  timeout=30
+        ${element_exists}=  Run Keyword And Return Status  Page Should Contain Element  ${xpath}
+        IF  ${element_exists}
+            ${parent_xpath}=  Set Variable  ${xpath}/..
+            ${parent_html}=  Get Element Attribute  ${parent_xpath}  outerHTML
+            Log  ${parent_html}
+            EXIT FOR LOOP
+        END
+    END
 
 *** Test Cases ***
 Test Case 1
