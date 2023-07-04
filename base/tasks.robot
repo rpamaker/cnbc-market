@@ -1,33 +1,30 @@
 *** Settings ***
 Library  SeleniumLibrary
-Library  RPA.Tables
+Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${URL}  https://www.brou.com.uy/
-${TABLE_XPATH}  //*[@id="p_p_id_cotizacion_WAR_broutmfportlet_INSTANCE_df0HsIO8xsuv_"]/div/div/table
 
 *** Keywords ***
-Open Browser To Page
-    Open Browser  ${URL}  Chrome
-    Wait Until Page Contains Element  ${TABLE_XPATH}
+Open Browser To Login Page
+    Open Browser  ${URL}  browser=chrome
+    Maximize Browser Window
+    Wait Until Page Contains Element  id:username
+    Wait Until Page Contains Element  id:password
 
-Capture And Log Table Data
-    @{rows}=  Get WebElements  ${TABLE_XPATH}/tbody/tr
-    @{data}=  Create List
-    FOR  ${row}  IN  @{rows}
-        ${currency}=  Get Text  ${row}/td[1]/div/div/p
-        ${buy_rate}=  Get Text  ${row}/td[2]/div/p
-        ${sell_rate}=  Get Text  ${row}/td[4]/div/p
-        &{row_data}=  Create Dictionary  Currency=${currency}  Buy_Rate=${buy_rate}  Sell_Rate=${sell_rate}
-        Append To List  ${data}  ${row_data}
-    END
-    FOR  ${row_data}  IN  @{data}
-        Log  ${row_data}
-    END
-    ${table}=  Create Table  ${data}
-    Write Table To Csv  ${table}  cotizaciones.csv
+Log In
+    [Arguments]  ${username}  ${password}
+    Input Text  id:username  ${username}
+    Input Text  id:password  ${password}
+    Click Button  id:login
+
+Get Table Info
+    Wait Until Page Contains Element  xpath://table[@title='Cotizaciones']
+    ${table_html}=  Get Element Attribute  xpath://table[@title='Cotizaciones']  outerHTML
+    Log  ${table_html}
 
 *** Test Cases ***
-Capture And Log Table Data
-    Open Browser To Page
-    Capture And Log Table Data
+Get Table Data
+    Open Browser To Login Page
+    Log In  demo  mode
+    Get Table Info
