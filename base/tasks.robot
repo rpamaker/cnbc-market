@@ -13,12 +13,12 @@ Open The Website And Login
 
 Find The Table
     # Trying different XPaths
-    ${xpaths}=  Create List  xpath://*[contains(text(),'Cotizaciones')]  xpath://*[contains(@value,'Cotizaciones')]
+    ${xpaths}=  Create List  xpath://*[contains(text(),'Euro')]
     FOR  ${xpath}  IN  @{xpaths}
         Wait Until Page Contains Element  ${xpath}  timeout=30
         ${element_exists}=  Run Keyword And Return Status  Page Should Contain Element  ${xpath}
         IF  ${element_exists}
-            ${parent_xpath}=  Set Variable  ${xpath}/..
+            ${parent_xpath}=  Set Variable  ${xpath}/../..
             ${parent_html}=  Get Element Attribute  ${parent_xpath}  outerHTML
             Log  ${parent_html}
             EXIT FOR LOOP
