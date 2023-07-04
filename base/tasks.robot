@@ -4,28 +4,11 @@ Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${URL}  https://www.brou.com.uy/
+${TABLE_XPATH}  //*[@id="p_p_id_cotizacion_WAR_broutmfportlet_INSTANCE_df0HsIO8xsuv_"]/div/div/table/tbody
 
-*** Keywords ***
-Open The Website And Login
-    Open Browser  ${URL}  chrome
-    Maximize Browser Window
-    # Here you would typically have steps to log in, if necessary
-
-Find The Table
-    # Trying different XPaths
-    ${xpaths}=  Create List  xpath://*[contains(text(),'Euro')]
-    FOR  ${xpath}  IN  @{xpaths}
-        Wait Until Page Contains Element  ${xpath}  timeout=30
-        ${element_exists}=  Run Keyword And Return Status  Page Should Contain Element  ${xpath}
-        IF  ${element_exists}
-            ${parent_xpath}=  Set Variable  ${xpath}/../..
-            ${parent_html}=  Get Element Attribute  ${parent_xpath}  outerHTML
-            Log  ${parent_html}
-            EXIT FOR LOOP
-        END
-    END
-
-*** Test Cases ***
-Test Case 1
-    Open The Website And Login
-    Find The Table
+*** Tasks ***
+Open Website and Log Exchange Rates
+    Open Browser  ${URL}  browser=chrome
+    Wait Until Page Contains Element  ${TABLE_XPATH}  timeout=30
+    ${table_data}=  Get Text  ${TABLE_XPATH}
+    Log  ${table_data}
