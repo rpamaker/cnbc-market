@@ -1,7 +1,7 @@
 *** Settings ***
 Library  SeleniumLibrary
 Library  Collections
-Library  OperatingSystem
+Library  RPA.Tables
 Suite Teardown  Close All Browsers
 
 *** Variables ***
@@ -30,7 +30,6 @@ Open Website and Get Table Information
         END
         Append To List  ${table_data}  ${row_data}
     END
-    ${csv_data}=  Convert To CSV  ${table_data}
-    Create File  ${CSV_FILE_PATH}  ${csv_data}
+    Write table to CSV  ${table_data}  ${CSV_FILE_PATH}
     Log  ${table_data}
     Close Browser
