@@ -30,6 +30,7 @@ Open Website and Get Table Information
         END
         Append To List  ${table_data}  ${row_data}
     END
-    Write table to CSV  ${table_data}  ${CSV_FILE_PATH}
+    ${table}=  Create Table  ${table_data}
+    Write table to CSV  ${table}  ${CSV_FILE_PATH}
     Log  ${table_data}
     Close Browser
