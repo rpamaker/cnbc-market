@@ -1,13 +1,5 @@
-# Usage
+# CNBC Stock market prices
 
-* Shift+CMD+P
-    > RPAMAKER: Create Robot
+Open CNBC website and copy some Stock Market prices.
 
-* botname/base/helloworld.robot 
-    > right click > copy path
-
-* Shift+CMD+P
-    > RPAMAKER: Run Robot
-
-* Shift+CMD+P
-    > RPAMAKER: Deploy Robot
+This script was created 100% for the RPAMAKER plugin for ChatGPT 
