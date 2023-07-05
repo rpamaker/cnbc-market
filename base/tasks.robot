@@ -1,11 +1,13 @@
 *** Settings ***
 Library  SeleniumLibrary
 Library  Collections
+Library  OperatingSystem
 Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${URL}  https://www.cnbc.com/world/?region=world
 ${TABLE_XPATH}  //*[@id="HomePageInternational-MarketsModule-13"]/section[2]/section[1]/div[1]/div/div/div[1]/div/table
+${CSV_FILE_PATH}  data/market.csv
 
 *** Test Cases ***
 Open Website and Get Table Information
@@ -18,6 +20,17 @@ Open Website and Get Table Information
         Exit For Loop If  ${row_count} > 1
         Sleep  5
     END
-    ${table_html}=  Get Element Attribute  ${TABLE_XPATH}  outerHTML
-    Log  ${table_html}
+    ${table_data}=  Create List
+    FOR  ${row}  IN  @{rows}
+        ${columns}=  Get WebElements  ${row}/td
+        ${row_data}=  Create List
+        FOR  ${column}  IN  @{columns}
+            ${cell_data}=  Get Text  ${column}
+            Append To List  ${row_data}  ${cell_data}
+        END
+        Append To List  ${table_data}  ${row_data}
+    END
+    ${csv_data}=  Convert To CSV  ${table_data}
+    Create File  ${CSV_FILE_PATH}  ${csv_data}
+    Log  ${table_data}
     Close Browser
