@@ -3,8 +3,8 @@ Library  SeleniumLibrary
 Suite Teardown  Close All Browsers
 
 *** Variables ***
-${URL}  https://edition.cnn.com/markets
-${TABLE_XPATH}  /html/body/div[1]/section[3]/section[1]/section[1]/div/section/div/div[3]/div[2]/div[2]/div[2]/div/div/div[2]/div
+${URL}  https://www.marketwatch.com/
+${TABLE_XPATH}  /html/body/section[1]/div[2]/div/div[2]/div/div[1]/table
 
 *** Tasks ***
 Open Website and Get Market Prices
